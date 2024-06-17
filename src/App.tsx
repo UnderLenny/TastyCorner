@@ -1,3 +1,4 @@
+import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import Button from './components/Button/Button';
 import Input from './components/Input/Input';
 
@@ -8,10 +9,14 @@ function App() {
     return (
         <>
             <Button onClick={addCounter}>Кнопка</Button>
-            <Button appearance="big" onClick={addCounter}>
+            <Button appearance='big' onClick={addCounter}>
                 Кнопка
             </Button>
-            <Input placeholder="Email" />
+            <Input placeholder='Email' />
+            <div>
+                <Link to='/'>Меню</Link>
+                <Link to='/cart'>Корзина</Link>
+            </div>
         </>
     );
 }
