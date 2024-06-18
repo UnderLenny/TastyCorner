@@ -13,10 +13,6 @@ function App() {
                 Кнопка
             </Button>
             <Input placeholder='Email' />
-            <div>
-                <Link to='/'>Меню</Link>
-                <Link to='/cart'>Корзина</Link>
-            </div>
         </>
     );
 }
