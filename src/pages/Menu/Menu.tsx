@@ -5,21 +5,29 @@ import styles from './Menu.module.css';
 import { PREFIX } from './../../helpers/API';
 import { Product } from '../../interfaces/product.interface';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Menu = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getMenu = async () => {
     try {
-      const res = await fetch(`${PREFIX}/products`);
-      if (!res.ok) {
-        return;
-      }
-      const data = (await res.json()) as Product[];
+      const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
       setProducts(data);
     } catch (err) {
       return err;
     }
+    // try {
+    //   const res = await fetch(`${PREFIX}/products`);
+    //   if (!res.ok) {
+    //     return;
+    //   }
+    //   const data = (await res.json()) as Product[];
+    //   setProducts(data);
+    // } catch (err) {
+    //   return err;
+    // }
   };
 
   useEffect(() => {
