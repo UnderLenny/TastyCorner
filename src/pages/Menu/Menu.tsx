@@ -2,8 +2,30 @@ import Heading from '../../components/Heading/Heading';
 import ProductCart from '../../components/ProductCart/ProductCart';
 import Search from '../../components/Search/Search';
 import styles from './Menu.module.css';
+import { PREFIX } from './../../helpers/API';
+import { Product } from '../../interfaces/product.interface';
+import { useEffect, useState } from 'react';
 
 const Menu = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const getMenu = async () => {
+    try {
+      const res = await fetch(`${PREFIX}/products`);
+      if (!res.ok) {
+        return;
+      }
+      const data = (await res.json()) as Product[];
+      setProducts(data);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    getMenu();
+  }, [getMenu]);
+
   return (
     <>
       <div className={styles['head']}>
@@ -11,14 +33,16 @@ const Menu = () => {
         <Search placeholder='Введите блюдо или его состав'></Search>
       </div>
       <div>
-        <ProductCart
-          id={1}
-          title='Наслаждение'
-          description='Салями, руккола, помидоры, оливки'
-          rating={4.5}
-          price={300}
-          image='/product-demo.png'
-        />
+        {products.map((product) => (
+          <ProductCart
+            id={product.id}
+            name={product.name}
+            description={product.ingredients.join(', ')}
+            rating={product.rating}
+            price={product.price}
+            image={product.image}
+          />
+        ))}
       </div>
     </>
   );
